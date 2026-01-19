@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Statistics</title>
+</head>
+<body>
+
+<h2>Select Column</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <select name="column">
+        {% for h in headers %}
+            <option value="{{ h }}">{{ h }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Get Stats">
+</form>
+
+{% if result %}
+    <h3>Statistics for {{ result.column }}</h3>
+    <p>Missing Values: {{ result.missing }}</p>
+
+    {% if result.message %}
+        <p>{{ result.message }}</p>
+        <p>Mode: {{ result.mode }}</p>
+    {% else %}
+        <p>Min: {{ result.min }}</p>
+        <p>Max: {{ result.max }}</p>
+        <p>Mean: {{ result.mean }}</p>
+        <p>Median: {{ result.median }}</p>
+        <p>Mode: {{ result.mode }}</p>
+    {% endif %}
+{% endif %}
+
+<br>
+<a href="/">Upload New CSV</a>
+
+</body>
+</html>
